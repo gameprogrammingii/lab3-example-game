@@ -90,7 +90,7 @@ During play the input of the player is recorded first to a buffer in memory then
 
 This newly recorded and saved replay, or a previously recorded replay, can then be selected in the main menu and played back. The replay feature should have a history of replays to select from.
 
-### TL;DR for the features required for different grades
+## TL;DR for the features required for different grades
 
 **Pass**
 - Win/lose conditions
