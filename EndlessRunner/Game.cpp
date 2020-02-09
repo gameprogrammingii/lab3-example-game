@@ -61,9 +61,26 @@ void Game::Run()
 		auto time = SDL_GetTicks();
 
 		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
+			switch (event.type)
+			{
+			case SDL_QUIT:
 				return;
+			case SDL_KEYDOWN:
+			{
+				SDL_Keycode sym = event.key.keysym.sym;
+				switch (sym)
+				{
+				case SDLK_SPACE:
+					SwitchToState<PlayState>();
+				}
 			}
+			break;
+			case SDL_KEYUP:
+			{
+			}
+			break;
+			}
+
 		}
 
 

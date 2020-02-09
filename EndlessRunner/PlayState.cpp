@@ -14,6 +14,8 @@ PlayState::PlayState(Game* game) : State(game)
 
 void PlayState::Init()
 {
+	game->ClearGameObjects();
+
 	const float width = 840.0f;
 	const float height = 600.0f;
 	const float maxY = height - 100.0f;
