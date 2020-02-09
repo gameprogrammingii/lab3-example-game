@@ -80,6 +80,33 @@ Background music must be played and appropriate sound effects must be played whe
 
 The following features are required for a **Pass with Distinction**
 
+### Particle Effects
+
+Two or more particle effects should be rendered in the game. E.g shattered glass when the player jumps though a window or the smoke in the background in [Canabalt](https://www.youtube.com/watch?v=IMBg75_TiLw). But it can also be something in the main menu or even in a loading screen.
+
+### Replay Recording and Playback
+
+During play the input of the player is recorded first to a buffer in memory then, when the player hits one lose condition, the content of the recording (i.e memory buffer) is written to file on disk. 
+
+This newly recorded and saved replay, or a previously recorded replay, can then be selected in the main menu and played back. The replay feature should have a history of replays to select from.
+
+### TL;DR for the features required for different grades
+
+**Pass**
+- Win/lose conditions
+- 3+ game states
+- Easing
+- Collision detection and resolve
+- 3+ different keyframe animations
+- 3+ layers of background parallax scrolling
+- Camera shake
+- 3+ settings configuration file
+- Music and Sound Effects
+**Pass with Distinction**
+- All features of Pass
+- 2+ particle effects
+- Replay recording and playback
+
 ## Instructions
 
 ### Get started
