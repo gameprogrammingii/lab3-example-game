@@ -78,7 +78,7 @@ Background music must be played and appropriate sound effects must be played whe
 
 ## Pass with Distinction
 
-The following features are required for a **Pass with Distinction**
+All features of **Pass** and the following features are required for a **Pass with Distinction**
 
 ### Particle Effects
 
@@ -93,6 +93,7 @@ This newly recorded and saved replay, or a previously recorded replay, can then 
 ## TL;DR for the features required for different grades
 
 **Pass**
+
 - Win/lose conditions
 - 3+ game states
 - Easing
@@ -102,7 +103,9 @@ This newly recorded and saved replay, or a previously recorded replay, can then 
 - Camera shake
 - 3+ settings configuration file
 - Music and Sound Effects
+
 **Pass with Distinction**
+
 - All features of Pass
 - 2+ particle effects
 - Replay recording and playback
