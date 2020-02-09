@@ -1,4 +1,5 @@
-# Lab 2 - Animation
+# Lab 3 - Game Project in 2D
+Endless Runner
 
 ## Student Name(s)
 
@@ -13,33 +14,13 @@ Enter your name(s) here (All team members):
 (insert, if needed, instructions for teacher here)
 
 ## Introduction 
-The goal of this assignment is to have data-driven animations. 
-This is achieved by having one file that defines each individual frame of an animation in a ​sprite atlas. 
-A sprite atlas is an image that contains multiple smaller images. 
-The other file defines 
- 1. What sprite atlas to use. 
- 2. and the playback of the animation, i.e which frame is played in what order and with what type of behaviour.
- 
-### Examples of files
 
-Sprite atlas:
-```
-// File: assets/player-sprite-atlas.txt 
-assets/image/player-idle.png 
-0 0 16 16 
-16 0 16 16 
-32 0 16 16 
-48 0 16 16 
-```
+The goal of this assignment is to write an [endless runner](https://en.wikipedia.org/wiki/Platform_game#Endless_running_games) game in 2D, using C++ and SDL, with an emphasis on **game feel**. An endless runner is a specialization of the platformer genre where the player is always moving forwards. The genre was popularized the game [Temple Run](https://en.wikipedia.org/wiki/Temple_Run).
 
-Animation:
-```
-// File: assets/player-animation.txt
-assets/player-sprite-atlas.txt 
-looping
-0 1 2 3 4 5 6 7 8
-```
- 
+The reason for picking this genre is that the core mechanic is easy to understand and easy to implement - we can have a simple input scheme with just one button - this lets us focus on the feel of the game. We try to maximize how the game is perceived using various audio-visual effects and techniques such as screen shake and fitting sound effects.
+
+Go check out [wikipedia](https://en.wikipedia.org/wiki/Platform_game#Endless_running_games) or [itch.io](https://itch.io/games/accessibility-one-button/tag-infinite-runner) for inspiration.
+
 ### Reading
 
 - [SDL2](https://www.libsdl.org/)
@@ -47,31 +28,57 @@ looping
 - [git - the simple guide](https://rogerdudler.github.io/git-guide/)
 - [Markdown Cheat Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 - [Sprite Sheet Wikipedia](https://en.wikipedia.org/wiki/Texture_atlas)
+- [Endless Runner](https://en.wikipedia.org/wiki/Platform_game#Endless_running_games)
+- [Game Programming Patterns](https://gameprogrammingpatterns.com/contents.html)
  
 ## Pass
 
-The ​Pass requirement for this assignment are: 
- - Three different types of animations 
-   - A looping animation 
-   - A ping pong animation 
-   - Animation that only plays once.
- - One or more files with sprite atlas definitions.
- - Three or more files with animation definitions.
- 
+The following features are required for a **pass**
+
+### Win/Lose Conditions
+
+The player must be able to win in some way and in the case of a game like a endless runner - a high score of some kind - length run or time survived. In this type of game the lose condition then becomes not being able to continue "running".
+
+### Main Game States
+
+There must be at least three different **main** game states in the game e.g *MenuState*, *PlayState* and *GameOverState*. These states can, and probably should, have sub-states such as the *PlayState* having a *PlayPausedState* and the *MenuState* having a *MenuSettingsState* and *MenuReplayState*.
+
+[Game States](https://gameprogrammingpatterns.com/state.html)
+
+### Menu Easing
+
+Easing is usually added to user interface elements and menu items to make the presentation look more interesting. Easing being a term coined by Robert Penner that is referring to different functions that adds flavour to motion.
+
+[Easing Functions in C++](https://github.com/jesusgollonet/ofpennereasing)
+[Explanation of Easing Functions](http://blog.moagrius.com/actionscript/jsas-understanding-easing/)
+
+### Collision Detection and Resolve
+
+A game is not complete without good collision detection and resolve in 2D. This is achieved by using algorithms to find if two colliders intersect or overlap, and then resolve the potential intersection by moving either object, depending if one of them is a static non-movable object or not, the penetration distance so that they no longer intersect. The collision detection algorithms developed in previous assignment comes in handy.
+
+### Keyframe Animations
+
+The game needs to have at least three different animations with three or more keyframes. The behaviour for the animations can be the same, i.e they can all be looping. The animation code from previous assignment comes in handy.
+
+### Background Parallax Scrolling
+
+The background in the play state must be using [parallax scrolling](https://en.wikipedia.org/wiki/Parallax_scrolling) with three or more layers.
+
+### Screen Shake
+
+In the games play state there should be some kind of screen shake effect during game play. Remember that some people are sensitive to flashing lights, so don't over do it.
+
+### Configuration File
+
+The game must read a configuration file that has at least three settings required for the game. E.g size of the window as width and height (note: this is one setting since it does not make sense to have one without the other) or some factor of the amount of screen shake allowed et cetera.
+
+### Music and Sound Effects
+
+Background music must be played and appropriate sound effects must be played when some kind of event happens in game, e.g player shoots or an enemy is hit by bullet.
+
 ## Pass with Distinction
 
-For a Pass with Distinction on this assignment you have to implement, in addition to the requirements in the Pass section, 
- - Skeletal animation.
- 
-[Skeletal Animation -  Wikipedia](https://en.wikipedia.org/wiki/Skeletal_animation)
- 
-Skeletal animation is a hierarchical set of interconnected bones and a surface representation of an object e.g a running character or a tree that is affected by wind.
-
-The requirements are:
- - At least 10 bones in an hierarchy
- - In the hierarchy two bones must have two or more children
- 
-External applications like Spine and DragonBones are allowed for creating and exporting skeletal animation data but not required.
+The following features are required for a **Pass with Distinction**
 
 ## Instructions
 
