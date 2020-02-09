@@ -139,11 +139,10 @@ Every student has to do the following steps:
 
 ## Grading
 
-This assignment has Pass , Pass with Distinction or Fail .
-For a Pass , all the required features in the Pass section of this document must be implemented
-correctly. For a Pass with Distinction all the features for Pass must be implemented correctly in
-addition to all required features for Pass with Distinction . Failing the steps defined in the
-Requirements section and Hand-in section will lead to a Fail .
+This assignment has Pass, Pass with Distinction or Fail. For a Pass, all the required features in the Pass section of this document must be implemented
+correctly. 
+For a Pass with Distinction, all the features for Pass must be implemented correctly in addition to all required features for Pass with Distinction.
+Failing the steps defined in the Requirements section and Hand-in section will lead to a Fail.
 
 ## Requirements
 
