@@ -10,16 +10,22 @@ void Screen::Init()
 		800,
 		600,
 		SDL_WINDOW_ALLOW_HIGHDPI);
+
+	renderer = SDL_CreateRenderer(window,
+		-1,
+		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
 Screen::Screen(Game* game)
 {
 	this->game = game;
 	window = NULL;
+	renderer = NULL;
 }
 
 Screen::~Screen()
 {
 	printf("Destroy Screen\n");
+	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 }
