@@ -7,9 +7,8 @@ void GameObject::Update(float deltaTime)
 {
 }
 
-void GameObject::Render()
+void GameObject::Render(Screen* screen)
 {
-	auto screen = game->GetScreen();
 	auto renderer = screen->Renderer();
 
 	SDL_Rect destination;

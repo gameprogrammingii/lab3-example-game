@@ -36,7 +36,7 @@ void Screen::Render()
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
 
-	game->RenderGameObjects();
+	game->RenderGameObjects(this);
 
 	SDL_RenderPresent(renderer);
 }

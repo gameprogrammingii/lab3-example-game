@@ -55,16 +55,16 @@ void PlayState::Init()
 		ball->maxY = maxY;
 		ball->Radius(13.0f + (float)(rand() % 5));
 		ball->Type(rand() % 3);
-		ball->velocity = Vector2(100 - rand() % 200, -rand() % 100);
+		ball->velocity = Vector2((float)(100 - rand() % 200), (float)(-rand() % 100));
 		balls.push_back(ball);
 	}
 }
 
 void PlayState::Update(float deltaTime)
 {
-	for (int i = 0; i < balls.size(); i++)
+	for (int i = 0; i < (int)balls.size(); i++)
 	{
-		for (int j = i + 1; j < balls.size(); j++)
+		for (int j = i + 1; j < (int)balls.size(); j++)
 		{
 			auto a = balls[i];
 			auto b = balls[j];

@@ -27,11 +27,11 @@ void Game::ClearGameObjects()
 	gameObjects.clear();
 }
 
-void Game::RenderGameObjects()
+void Game::RenderGameObjects(Screen* screen)
 {
 	for (auto gameObject : gameObjects)
 	{
-		gameObject->Render();
+		gameObject->Render(screen);
 	}
 }
 

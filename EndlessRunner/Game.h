@@ -37,7 +37,7 @@ public:
 	Screen* GetScreen() { return &screen; }
 	AssetManager* GetAssetManager() { return &assetManager; }
 	void ClearGameObjects();
-	void RenderGameObjects();
+	void RenderGameObjects(Screen* screen);
 
 	template<typename T>
 	T* CreateGameObject()

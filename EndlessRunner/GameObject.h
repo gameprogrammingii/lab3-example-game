@@ -6,6 +6,7 @@ using namespace Helium;
 
 class Game;
 struct Sprite;
+class Screen;
 
 class GameObject
 {
@@ -15,6 +16,6 @@ public:
 	Vector2 position;
 	Vector2 size;
 	virtual void Update(float deltaTime);
-	virtual void Render();
+	virtual void Render(Screen* screen);
 };
 
