@@ -5,9 +5,11 @@
 #include "GameObject.h"
 #include "AssetManager.h"
 #include "Ball.h"
+#include "PlayState.h"
 
 Game::Game() : screen(this), assetManager(this)
 {
+	state = NULL;
 }
 
 Game::~Game()
@@ -25,10 +27,19 @@ void Game::ClearGameObjects()
 	gameObjects.clear();
 }
 
+void Game::RenderGameObjects()
+{
+	for (auto gameObject : gameObjects)
+	{
+		gameObject->Render();
+	}
+}
+
 void Game::Init()
 {
 	screen.Init();
 	assetManager.Init();
+	SwitchToState<PlayState>();
 }
 
 void Game::Run()
@@ -37,47 +48,12 @@ void Game::Run()
 
 	auto renderer = screen.Renderer();
 
-	const float width = 840.0f;
-	const float height = 600.0f;
-	const float maxY = height - 100.0f;
-	const float minX = width * 0.5f - 200;
-	const float maxX = width * 0.5f + 200;
-	const float wallSize = 4.0f;
-	const float wallHalfSize = wallSize * 0.5f;
-	const float wallHeight = maxX - minX;
-
-	{
-		auto wall = CreateGameObject<GameObject>();
-		wall->position = Vector2(width * 0.5f, maxY);
-		wall->size = Vector2(maxX-minX, wallSize);
-		wall->sprite = assetManager.GetSprite("black");
-	}
-	{
-		auto wall = CreateGameObject<GameObject>();
-		wall->position = Vector2(minX, maxY - wallHeight * 0.5f);
-		wall->size = Vector2(wallSize, wallHeight);
-		wall->sprite = assetManager.GetSprite("black");
-	}
-	{
-		auto wall = CreateGameObject<GameObject>();
-		wall->position = Vector2(maxX, maxY - wallHeight * 0.5f);
-		wall->size = Vector2(wallSize, wallHeight);
-		wall->sprite = assetManager.GetSprite("black");
-	}
-
-	{
-		auto ball = CreateGameObject<Ball>();
-		ball->position = Vector2(width * 0.5f, height * 0.5f);
-		ball->minX = minX;
-		ball->maxX = maxX;
-		ball->maxY = maxY;
-		ball->Radius(15.0f);
-		ball->sprite = assetManager.GetSprite("red-circle");
-		ball->velocity = Vector2(100, -100);
-	}
-
 	const int framesPerSecond = 60;
 	const int frameLength = 1000 / framesPerSecond;
+	const int updateIterations = 30;
+
+	const float deltaTime = 1.0f / (float)framesPerSecond;
+	const float deltaTimeUpdate = deltaTime / (float)updateIterations;
 
 	SDL_Event event;
 	while (true)
@@ -90,21 +66,20 @@ void Game::Run()
 			}
 		}
 
-		for (auto gameObject : gameObjects)
+
+		for (int u = 0; u < updateIterations; u++)
 		{
-			gameObject->Update(0.001f * (float)frameLength);
+			state->Update(deltaTimeUpdate);
+
+			for (auto gameObject : gameObjects)
+			{
+				gameObject->Update(deltaTimeUpdate);
+			}
 		}
 
-		SDL_SetRenderDrawColor(renderer, 0xef, 0xcf, 0xdf, 0xff);
-		SDL_RenderClear(renderer);
-		SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
 
-		for (auto gameObject : gameObjects)
-		{
-			gameObject->Render();
-		}
+		screen.Render();
 
-		SDL_RenderPresent(renderer);
 
 		int timeElapsed = SDL_GetTicks() - time;
 		int timeToWait = frameLength - timeElapsed;

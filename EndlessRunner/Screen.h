@@ -16,5 +16,6 @@ public:
 	Screen(Game* game);
 	~Screen();
 	SDL_Renderer* Renderer() { return renderer; }
+	void Render();
 };
 

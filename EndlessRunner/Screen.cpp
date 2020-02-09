@@ -29,3 +29,14 @@ Screen::~Screen()
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 }
+
+void Screen::Render()
+{
+	SDL_SetRenderDrawColor(renderer, 0xef, 0xcf, 0xdf, 0xff);
+	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff);
+
+	game->RenderGameObjects();
+
+	SDL_RenderPresent(renderer);
+}

@@ -8,6 +8,17 @@
 using namespace std;
 
 class GameObject;
+class Game;
+
+class State
+{
+protected:
+	Game* game;
+public:
+	State(Game* game) { this->game = game; }
+	virtual void Init() = 0;
+	virtual void Update(float deltaTime) = 0;
+};
 
 class Game
 {
@@ -16,13 +27,17 @@ class Game
 	vector<GameObject*> gameObjects;
 
 	void Init();
-	
+
+	State* state;
+
 public:
 	void Run();
 	Game();
 	~Game();
 	Screen* GetScreen() { return &screen; }
 	AssetManager* GetAssetManager() { return &assetManager; }
+	void ClearGameObjects();
+	void RenderGameObjects();
 
 	template<typename T>
 	T* CreateGameObject()
@@ -33,6 +48,17 @@ public:
 		return gameObject;
 	}
 
-	void ClearGameObjects();
+	template<typename T>
+	void SwitchToState()
+	{
+		if (state != NULL)
+		{
+			delete state;
+			state = NULL;
+		}
+
+		state = new T(this);
+		state->Init();
+	}
 };
 
