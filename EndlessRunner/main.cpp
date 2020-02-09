@@ -3,7 +3,6 @@
 #include "SDL.h"
 #include "SdlManager.h"
 #include "Game.h"
-#include "HeliumMath.h"
 
 int main(int argc, char* args[])
 {
