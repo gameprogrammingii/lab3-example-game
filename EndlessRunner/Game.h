@@ -9,17 +9,7 @@ using namespace std;
 
 class GameObject;
 class Game;
-
-class State
-{
-protected:
-	Game* game;
-public:
-	State(Game* game) { this->game = game; }
-	virtual void Init() = 0;
-	virtual void Update(float deltaTime) = 0;
-	virtual void Input(const SDL_Event& event) = 0;
-};
+class Ball;
 
 class Game
 {
@@ -29,8 +19,9 @@ class Game
 
 	void Init();
 
-	State* state;
-
+	/*game play*/
+	vector<Ball*> balls;
+	/*---------*/
 public:
 	void Run();
 	Game();
@@ -47,19 +38,6 @@ public:
 		gameObject->game = this;
 		gameObjects.push_back(gameObject);
 		return gameObject;
-	}
-
-	template<typename T>
-	void SwitchToState()
-	{
-		if (state != NULL)
-		{
-			delete state;
-			state = NULL;
-		}
-
-		state = new T(this);
-		state->Init();
 	}
 
 	void DestroyGameObject(GameObject* gameObject);

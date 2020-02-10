@@ -16,7 +16,7 @@ int main(int argc, char* args[])
 	catch (exception e)
 	{
 		cout << e.what() << endl;
-		throw;
+		return -1;
 	}
 
 	return 0;

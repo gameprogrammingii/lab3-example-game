@@ -5,12 +5,10 @@
 #include "GameObject.h"
 #include "AssetManager.h"
 #include "Ball.h"
-#include "PlayState.h"
 #include "Utility.h"
 
 Game::Game() : screen(this), assetManager(this)
 {
-	state = NULL;
 }
 
 Game::~Game()
@@ -46,7 +44,19 @@ void Game::Init()
 {
 	screen.Init();
 	assetManager.Init();
-	SwitchToState<PlayState>();
+}
+
+void SpawnBall(Game* game, vector<Ball*>& balls, float width, float height, float minX, float maxX, float maxY)
+{
+	auto ball = game->CreateGameObject<Ball>();
+	ball->position = Vector2(width * 0.5f - 10 + rand() % 20, height * 0.5f - 10 + rand() % 20);
+	ball->minX = minX;
+	ball->maxX = maxX;
+	ball->maxY = maxY;
+	ball->Radius(13.0f + (float)(rand() % 5));
+	ball->Type(rand() % 3);
+	ball->velocity = Vector2((float)(100 - rand() % 200), (float)(-rand() % 100));
+	balls.push_back(ball);
 }
 
 void Game::Run()
@@ -57,10 +67,46 @@ void Game::Run()
 
 	const int framesPerSecond = 60;
 	const int frameLength = 1000 / framesPerSecond;
-	const int updateIterations = 30;
 
 	const float deltaTime = 1.0f / (float)framesPerSecond;
-	const float deltaTimeUpdate = deltaTime / (float)updateIterations;
+
+	/*---- Game Play ----*/
+
+	const float width = 840.0f;
+	const float height = 600.0f;
+	const float maxY = height - 100.0f;
+	const float minX = width * 0.5f - 200;
+	const float maxX = width * 0.5f + 200;
+	const float wallSize = 4.0f;
+	const float wallHalfSize = wallSize * 0.5f;
+	const float wallHeight = maxX - minX;
+
+	{
+		auto wall = CreateGameObject<GameObject>();
+		wall->position = Vector2(width * 0.5f, maxY + wallHalfSize);
+		wall->size = Vector2(maxX - minX, wallSize);
+		wall->sprite = assetManager.GetSprite("black");
+	}
+	{
+		auto wall = CreateGameObject<GameObject>();
+		wall->position = Vector2(minX - wallHalfSize, maxY - wallHeight * 0.5f);
+		wall->size = Vector2(wallSize, wallHeight);
+		wall->sprite = assetManager.GetSprite("black");
+	}
+	{
+		auto wall = CreateGameObject<GameObject>();
+		wall->position = Vector2(maxX + wallHalfSize, maxY - wallHeight * 0.5f);
+		wall->size = Vector2(wallSize, wallHeight);
+		wall->sprite = assetManager.GetSprite("black");
+	}
+
+	for (int i = 0; i < 50; i++)
+	{
+		SpawnBall(this, balls, width, height, minX, maxX, maxY);
+	}
+
+	/*--------*/
+
 
 	SDL_Event event;
 	while (true)
@@ -72,29 +118,70 @@ void Game::Run()
 			{
 			case SDL_QUIT:
 				return;
-			default: 
+			case SDL_KEYDOWN:
+				break;
+			case SDL_MOUSEBUTTONDOWN:
 			{
-				state->Input(event);
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+
+				Vector2 mousePosition = Vector2((float)x, (float)y);
+
+				bool hit = false;
+
+				for (int i = 0; i < (int)balls.size(); i++)
+				{
+					auto sqrDistance = (balls[i]->position - mousePosition).length_squared();
+					if (sqrDistance < balls[i]->Radius() * balls[i]->Radius())
+					{
+						auto ball = balls[i];
+
+						DestroyGameObject(ball);
+						balls.erase(balls.begin() + i);
+
+						hit = true;
+						break;
+					}
+				}
+
+				if (!hit)
+					SpawnBall(this, balls, width, height, minX, maxX, maxY);
 			}
 			break;
+			default:
+				break;
 			}
 
 		}
 
 
-		for (int u = 0; u < updateIterations; u++)
+		for (int i = 0; i < (int)balls.size(); i++)
 		{
-			state->Update(deltaTimeUpdate);
-
-			for (auto gameObject : gameObjects)
+			for (int j = i + 1; j < (int)balls.size(); j++)
 			{
-				gameObject->Update(deltaTimeUpdate);
+				auto a = balls[i];
+				auto b = balls[j];
+
+				auto diff = a->position - b->position;
+
+				auto combineRadius = a->Radius() + b->Radius();
+
+				if (diff.length_squared() < combineRadius * combineRadius)
+				{
+					auto dir = diff.unit();
+					auto overlap = combineRadius - diff.length();
+					a->Separate(dir, overlap);
+					b->Separate(-dir, overlap);
+				}
 			}
 		}
 
+		for (auto gameObject : gameObjects)
+		{
+			gameObject->Update(deltaTime);
+		}
 
 		screen.Render();
-
 
 		int timeElapsed = SDL_GetTicks() - time;
 		int timeToWait = frameLength - timeElapsed;
