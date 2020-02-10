@@ -90,6 +90,8 @@ void AssetManager::Init()
 	sounds["good"] = new Sound("assets/audio/dusty/good.wav");
 	sounds["bad"] = new Sound("assets/audio/dusty/bad.wav");
 	sounds["spawnnew"] = new Sound("assets/audio/dusty/spawnnew.wav");
+
+	musics["play"] = new Music("assets/audio/actionrpg/10credits1.wav");
 }
 
 Sprite* AssetManager::GetSprite(string name) const

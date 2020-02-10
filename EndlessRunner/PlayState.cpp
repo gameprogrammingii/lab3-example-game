@@ -75,6 +75,8 @@ void PlayState::Init()
 	{
 		SpawnBall();
 	}
+
+	Mix_PlayMusic(assetManager->GetMusic("play")->data, -1);
 }
 
 void PlayState::Update(float deltaTime)
@@ -119,7 +121,7 @@ void PlayState::Input(const SDL_Event& event)
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 
-		Vector2 mousePosition = Vector2(x, y);
+		Vector2 mousePosition = Vector2((float)x, (float)y);
 
 		for (int i = 0; i < (int)balls.size(); i++)
 		{
