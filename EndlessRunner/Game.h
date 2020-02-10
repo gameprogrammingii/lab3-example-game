@@ -18,6 +18,7 @@ public:
 	State(Game* game) { this->game = game; }
 	virtual void Init() = 0;
 	virtual void Update(float deltaTime) = 0;
+	virtual void Input(const SDL_Event& event) = 0;
 };
 
 class Game
@@ -60,5 +61,7 @@ public:
 		state = new T(this);
 		state->Init();
 	}
+
+	void DestroyGameObject(GameObject* gameObject);
 };
 

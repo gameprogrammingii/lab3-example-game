@@ -6,6 +6,7 @@
 #include "AssetManager.h"
 #include "Ball.h"
 #include "PlayState.h"
+#include "Utility.h"
 
 Game::Game() : screen(this), assetManager(this)
 {
@@ -33,6 +34,12 @@ void Game::RenderGameObjects(Screen* screen)
 	{
 		gameObject->Render(screen);
 	}
+}
+
+void Game::DestroyGameObject(GameObject* gameObject)
+{
+	remove(gameObjects, gameObject);
+	delete gameObject;
 }
 
 void Game::Init()
@@ -65,18 +72,9 @@ void Game::Run()
 			{
 			case SDL_QUIT:
 				return;
-			case SDL_KEYDOWN:
+			default: 
 			{
-				SDL_Keycode sym = event.key.keysym.sym;
-				switch (sym)
-				{
-				case SDLK_SPACE:
-					SwitchToState<PlayState>();
-				}
-			}
-			break;
-			case SDL_KEYUP:
-			{
+				state->Input(event);
 			}
 			break;
 			}

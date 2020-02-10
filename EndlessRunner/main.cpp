@@ -6,11 +6,18 @@
 
 int main(int argc, char* args[])
 {
-	SdlManager sdlManager;
-	sdlManager.Init();
+	try {
+		SdlManager sdlManager;
+		sdlManager.Init();
 
-	Game game;
-	game.Run();
-	
+		Game game;
+		game.Run();
+	}
+	catch (exception e)
+	{
+		cout << e.what() << endl;
+		throw;
+	}
+
 	return 0;
 }

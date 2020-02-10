@@ -4,7 +4,7 @@
 
 void Screen::Init()
 {
-	window = SDL_CreateWindow("Endless Runner",
+	window = SDL_CreateWindow("Super Cool Ball Game",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		800,
