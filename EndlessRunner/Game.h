@@ -11,6 +11,17 @@ class GameObject;
 class Game;
 class Ball;
 
+class State
+{
+protected:
+	Game* game;
+public:
+	State(Game* game) { this->game = game; }
+	virtual void Init() = 0;
+	virtual void Update(float deltaTime) = 0;
+	virtual void Input(const SDL_Event& event) = 0;
+};
+
 class Game
 {
 	Screen screen;
@@ -19,9 +30,9 @@ class Game
 
 	void Init();
 
-	/*game play*/
-	vector<Ball*> balls;
-	/*---------*/
+
+	State* state;
+
 public:
 	void Run();
 	Game();
@@ -41,5 +52,18 @@ public:
 	}
 
 	void DestroyGameObject(GameObject* gameObject);
+
+	template<typename T>
+	void SwitchToState()
+	{
+		if (state != NULL)
+		{
+			delete state;
+			state = NULL;
+		}
+
+		state = new T(this);
+		state->Init();
+	}
 };
 

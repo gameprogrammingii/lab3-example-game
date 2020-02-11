@@ -25,6 +25,18 @@ AssetManager::~AssetManager()
 		delete sprite.second;
 	}
 	sprites.clear();
+
+	for (auto music : musics)
+	{
+		delete music.second;
+	}
+	musics.clear();
+
+	for (auto sound : sounds)
+	{
+		delete sound.second;
+	}
+	sounds.clear();
 }
 
 SDL_Surface* CreateCircle(int size, int r, int g, int b)
@@ -86,9 +98,25 @@ void AssetManager::Init()
 		SDL_FreeSurface(surface);
 		sprites["black"] = new Sprite{ texture };
 	}
+
+	musics["bgmusic"] = new Music("assets/audio/actionrpg/10credits1.wav");
+
+	sounds["spawnnew"] = new Sound("assets/audio/dusty/spawnnew.wav");
+	sounds["bad"] = new Sound("assets/audio/dusty/bad.wav");
+	sounds["good"] = new Sound("assets/audio/dusty/good.wav");
 }
 
 Sprite* AssetManager::GetSprite(string name) const
 {
 	return sprites.find(name)->second;
+}
+
+Music* AssetManager::GetMusic(string name) const
+{
+	return musics.find(name)->second;
+}
+
+Sound* AssetManager::GetSound(string name) const
+{
+	return sounds.find(name)->second;
 }
