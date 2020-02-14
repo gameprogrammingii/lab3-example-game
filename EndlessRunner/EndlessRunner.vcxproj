@@ -105,6 +105,7 @@ SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Easing.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="PlayState.h" />

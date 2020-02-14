@@ -141,6 +141,11 @@ void PlayState::Input(const SDL_Event& event)
 				game->DestroyGameObject(ball);
 				balls.erase(balls.begin() + i);
 
+				if (bad)
+				{
+					game->GetScreen()->Shake();
+				}
+
 				hit = true;
 				break;
 			}
