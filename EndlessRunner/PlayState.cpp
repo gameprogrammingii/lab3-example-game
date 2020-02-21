@@ -63,6 +63,17 @@ void PlayState::Init()
 	}
 
 	Mix_PlayMusic(assetManager->GetMusic("bgmusic")->data, -1);
+
+	{
+		scoreGameObject = game->CreateGameObject<GameObject>();
+		scoreGameObject->guiText = new GuiFont{
+			assetManager->GetFont("normal"),
+			{0, 0, 0},
+			"0"
+		};
+
+		scoreGameObject->position = { maxX + 20.0f, maxY - wallHeight };
+	}
 }
 
 void PlayState::Update(float deltaTime)
@@ -87,6 +98,14 @@ void PlayState::Update(float deltaTime)
 			}
 		}
 	}
+
+	guiScore = Cubic_EaseOut_Clamped(
+		SDL_GetTicks() - guiScoreStartTime,
+		guiScoreStartScore,
+		score - guiScoreStartScore,
+		500
+	);
+	scoreGameObject->guiText->text = std::to_string(guiScore);
 }
 
 void PlayState::Input(const SDL_Event& event)
@@ -144,6 +163,15 @@ void PlayState::Input(const SDL_Event& event)
 				if (bad)
 				{
 					game->GetScreen()->Shake();
+					AddPointsToScore(-500);
+				}
+				else
+				{
+					if (ball->Type() == 1)
+						AddPointsToScore(1000);
+					else
+						AddPointsToScore(5000);
+
 				}
 
 				hit = true;

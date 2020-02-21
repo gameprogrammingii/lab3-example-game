@@ -37,6 +37,12 @@ AssetManager::~AssetManager()
 		delete sound.second;
 	}
 	sounds.clear();
+
+	for (auto font : fonts)
+	{
+		delete font.second;
+	}
+	fonts.clear();
 }
 
 SDL_Surface* CreateCircle(int size, int r, int g, int b)
@@ -104,6 +110,9 @@ void AssetManager::Init()
 	sounds["spawnnew"] = new Sound("assets/audio/dusty/spawnnew.wav");
 	sounds["bad"] = new Sound("assets/audio/dusty/bad.wav");
 	sounds["good"] = new Sound("assets/audio/dusty/good.wav");
+
+	//"C:\Work\Uppsala\lab3-example-game\EndlessRunner\assets\open-sans\OpenSans-Regular.ttf"
+	fonts["normal"] = new Font("assets/open-sans/OpenSans-Regular.ttf", 40);
 }
 
 Sprite* AssetManager::GetSprite(string name) const
@@ -119,4 +128,9 @@ Music* AssetManager::GetMusic(string name) const
 Sound* AssetManager::GetSound(string name) const
 {
 	return sounds.find(name)->second;
+}
+
+Font* AssetManager::GetFont(string name) const
+{
+	return fonts.find(name)->second;
 }

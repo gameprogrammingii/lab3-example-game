@@ -5,6 +5,7 @@
 #include <string>
 #include <SDL_mixer.h>
 #include <iostream>
+#include "SDL_ttf.h"
 
 class Game;
 using namespace std;
@@ -51,12 +52,31 @@ struct Sound
 	}
 };
 
+struct Font
+{
+	TTF_Font* data;
+	Font(string filename, int ptsize)
+	{
+		data = TTF_OpenFont(filename.c_str(), ptsize);
+		if (data == NULL)
+		{
+			throw runtime_error(TTF_GetError());
+		}
+	}
+	~Font()
+	{
+		TTF_CloseFont(data);
+		data = NULL;
+	}
+};
+
 class AssetManager
 {
 	Game* game;
 	map<string, Sprite*> sprites;
 	map<string, Music*> musics;
 	map<string, Sound*> sounds;
+	map<string, Font*> fonts;
 public:
 	AssetManager(Game* game);
 	~AssetManager();
@@ -65,5 +85,6 @@ public:
 	Sprite* GetSprite(string name) const;
 	Music* GetMusic(string name) const;
 	Sound* GetSound(string name) const;
+	Font* GetFont(string name) const;
 };
 

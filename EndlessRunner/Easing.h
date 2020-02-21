@@ -27,3 +27,8 @@ inline static float Cubic_EaseInOut(float t, float b, float c, float d) {
 inline static float Linear_EaseNone(float t, float b, float c, float d) {
 	return c * t / d + b;
 }
+
+inline static int Cubic_EaseOut_Clamped(int t, int b, int c, int d) {
+	if (t > d) t = d;
+	return (int)Cubic_EaseOut((float)t, (float)b, (float)c, (float)d);
+}

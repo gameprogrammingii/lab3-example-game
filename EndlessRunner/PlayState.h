@@ -12,6 +12,19 @@ class PlayState :
 
 	Mix_Chunk* spawnnew;
 
+	int score = 0;
+	int guiScore = 0;
+	int guiScoreStartScore = 0;
+	int guiScoreStartTime = 0;
+	GameObject* scoreGameObject;
+
+	void AddPointsToScore(int pointsToAdd)
+	{
+		score += pointsToAdd;
+		guiScoreStartScore = guiScore;
+		guiScoreStartTime = SDL_GetTicks();
+	}
+
 public:
 	PlayState(Game* game);
 

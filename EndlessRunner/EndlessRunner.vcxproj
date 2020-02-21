@@ -108,6 +108,7 @@ SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GuiFont.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SdlManager.h" />
