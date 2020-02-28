@@ -7,8 +7,8 @@ void Screen::Init()
 	window = SDL_CreateWindow("Endless Runner",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		800,
-		600,
+		W,
+		H,
 		SDL_WINDOW_ALLOW_HIGHDPI);
 }
 
